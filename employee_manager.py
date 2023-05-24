@@ -45,6 +45,15 @@ class EmployeeManager:
         # Delete an employee from the 'employees' table based on the employee ID
         self.cursor.execute("DELETE FROM employees WHERE id=?", (id,))
 
+    def delete_client(self, id):
+        confirmation = messagebox.askquestion("Επιβεβαίωση Διαγραφής", "Είστε βέβαιος ότι θέλετε να διαγράψετε τον υπάλληλο;")
+        if confirmation == "yes":
+            self.cursor.execute("DELETE FROM clients WHERE id=?", (id,))
+            self.conn.commit()
+            messagebox.showinfo("Διαγραφή Υπαλλήλου", "Ο υπάλληλος διαγράφηκε επιτυχώς.")
+        else:
+            messagebox.showinfo("Ακύρωση Διαγραφής", "Η διαγραφή του υπαλλήλου ακυρώθηκε.")
+
         # Commit the changes to the database
         self.conn.commit()
 
