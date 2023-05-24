@@ -174,37 +174,3 @@ def get_stats_in_date_range(
     # Return the statistics list
     return stats
 
-
-def print_appointments_on_date(appointment_manager: AppointmentManager, date: datetime):
-    # Get all appointments on the specified date
-    appointments = appointment_manager.get_appointments_on_date(date)
-
-    # Initialize the printer
-    printer = None
-    try:
-        # Get the default printer
-        printer = os.environ["PRINTER"]
-
-        # Open the printer
-        printer = open(printer, "w")
-
-        # Print the header
-        printer.write("Appointments on {}:\n".format(date))
-
-        # Print each appointment
-        for appointment in appointments:
-            printer.write(
-                "Name: {}\nDate: {}\nTime: {}\nDuration: {} minutes\nClient: {}\nEmployee: {}\n\n".format(
-                    appointment["name"],
-                    appointment["date"],
-                    appointment["time"],
-                    appointment["duration"],
-                    appointment["client_id"],
-                    appointment["employee_id"],
-                )
-            )
-
-    finally:
-        # Close the printer
-        if printer is not None:
-            printer.close()
