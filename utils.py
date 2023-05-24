@@ -18,7 +18,7 @@ from openpyxl.utils import get_column_letter
 
 
 def export_all_appointments_to_xlsx(
-    appointment_manager, client_manager, destination_folder_path
+    appointment_manager, client_manager, destination_folder_path, date=None
 ):
     # Create a new workbook and select the active sheet
     wb = Workbook()
@@ -35,9 +35,13 @@ def export_all_appointments_to_xlsx(
         cell.font = Font(bold=True)
         cell.fill = PatternFill(patternType="solid", fgColor=Color(rgb="C6EFCE"))
 
-    # Retrieve all appointments from the appointment manager
-    appointments = appointment_manager.get_all_appointments()
-
+    if not date:
+        # Retrieve all appointments from the appointment manager
+        appointments = appointment_manager.get_all_appointments()
+    else:
+        appointments = appointment_manager.get_appointments_on_date()
+        return appointments
+    
     # Iterate over the appointments and populate the spreadsheet
     for row_num, appointment in enumerate(appointments, 2):
         # Retrieve the client information for the current appointment

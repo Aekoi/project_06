@@ -1,4 +1,5 @@
 import sqlite3
+from tkinter import messagebox
 
 # Add all of the necessary imports
 
@@ -17,13 +18,26 @@ class EmployeeManager:
         # Commit the changes to the database
         self.conn.commit()
 
+    def employee_exists(self, email, pass_code):
+        self.cursor.execute(
+            "SELECT * FROM clients WHERE email = ? OR pass_code = ?",
+            (email, pass_code),
+        )
+        return self.cursor.fetchone() is not None
+
     def add_employee(self, name, email, pass_code):
         # Insert a new employee into the 'employees' table
+        
+        if self.client_exists(email, pass_code):
+            messagebox.showerror("Ο υπάλληλος υπάρχει ήδη", "Παρακαλώ δοκιμάστε ξανά.")
+            return
+            
         self.cursor.execute(
             "INSERT INTO employees (name, email, pass_code) VALUES (?, ?, ?)",
             (name, email, pass_code),
         )
-
+        messagebox.showinfo("Καταχώρηση", "Ο υπάλληλος καταχωρήθηκε επιτυχώς")
+            
         # Commit the changes to the database
         self.conn.commit()
 
@@ -62,7 +76,7 @@ class EmployeeManager:
         self.cursor.execute(
             f"UPDATE employee SET {update_query} WHERE id=?", update_values
         )
-
+        messagebox.showinfo("Τροποποίηση", "Η τροποποίηση ολοκληρώθηκε επιτυχώς")
         # Commit the changes to the database
         self.conn.commit()
 

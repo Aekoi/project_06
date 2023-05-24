@@ -56,7 +56,7 @@ class ClientManager:
             "INSERT INTO clients (first_name, last_name, phone, email) VALUES (?, ?, ?, ?)",
             (first_name, last_name, phone, email),
         )
-        messagebox.showinfo("Καταχώρηση", "Ο Πελάτης Καταχωρήθηκε επιτυχώς")
+        messagebox.showinfo("Καταχώρηση", "Ο πελάτης καταχωρήθηκε επιτυχώς")
         self.conn.commit()
         # return
 

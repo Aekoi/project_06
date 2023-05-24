@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime, timedelta
+from tkinter import messagebox
 
 # Add all of the necessary imports
 
@@ -24,9 +25,12 @@ class AppointmentManager:
             date, duration, employee_id
         )
         if overlapping_appointments:
-            raise ValueError(
-                f"We have overlapping appointments: {overlapping_appointments}"
-            )
+            messagebox.showerror("Παρακαλώ αλλάξτε ημερομηνία και ώρα ραντεβού.")
+        else:
+            messagebox.showerror("Το ραντεβού εκχωρήθηκε επιτυχώς.")
+            return
+
+            
 
         # Insert the new appointment into the 'appointments' table
 
@@ -67,9 +71,10 @@ class AppointmentManager:
             date, duration, employee_id, appointment_id
         )
         if overlapping_appointments:
-            raise ValueError(
-                f"We have overlapping appointments: {overlapping_appointments}"
-            )
+            messagebox.showerror("Παρακαλώ αλλάξτε ημερομηνία και ώρα ραντεβού.")
+        else:
+            messagebox.showerror("Το ραντεβού τροποποιήθηκε επιτυχώς.")
+            return
 
         # Update an appointment in the 'appointments' table based on the appointment ID
 
